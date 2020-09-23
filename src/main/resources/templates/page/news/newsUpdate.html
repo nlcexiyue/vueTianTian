@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>文章列表--layui后台管理模板 2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/public.css" media="all"/>
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10" lay-filter="updateNewsFrom">
+    <div class="layui-col-md9 layui-col-xs12">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md9 layui-col-xs7">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">隐藏域id</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input id" lay-verify="newsName" name="id" id="newsId"
+                               placeholder="隐藏域id">
+                    </div>
+                </div>
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">文章标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input newsName" lay-verify="newsName" name="newsName"
+                               placeholder="请输入文章标题">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内容摘要</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容摘要" class="layui-textarea abstract" name="newsAbstract"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--上传图片的地方-->
+            <div class="layui-col-md3 layui-col-xs5">
+                <div class="layui-upload-list thumbBox mag0 magt3">
+                    <img class="layui-upload-img thumbImg" id="preview">
+                </div>
+                <div class="layui-progress" lay-showpercent="true" lay-filter="speed">
+                    <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item magb0">
+            <label class="layui-form-label">文章内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="content" lay-verify="content-verify"
+                          id="news_content" ></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3 layui-col-xs12">
+        <blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 分类目录</blockquote>
+        <div class="border category">
+            <div class="abstract" name="newsCategory">
+                <p><input type="checkbox" name="news" title="新闻" lay-skin="primary"/></p>
+                <p><input type="checkbox" name="goods" title="商品" lay-skin="primary"/></p>
+                <p><input type="checkbox" name="notice" title="公告" lay-skin="primary"/></p>
+                <p><input type="checkbox" name="images" title="图片" lay-skin="primary"/></p>
+            </div>
+        </div>
+        <blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
+        <div class="border">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 状　态</label>
+                <div class="layui-input-block newsStatus">
+                    <select name="status" lay-verify="required" id="newsStatusID">
+                        <option value="0">保存草稿</option>
+                        <option value="1">等待审核</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i class="layui-icon">&#xe609;</i> 发　布</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="release" title="立即发布" lay-skin="primary" lay-filter="release" checked/>
+                    <input type="radio" name="release" title="定时发布" lay-skin="primary" lay-filter="release"/>
+                </div>
+            </div>
+            <div class="layui-form-item layui-hide releaseDate">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" id="release" placeholder="请选择日期和时间" readonly/>
+                </div>
+            </div>
+            <div class="layui-form-item openness">
+                <label class="layui-form-label"><i class="seraph icon-look"></i> 公开度</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="openness" class="look" value="开放浏览" title="开放浏览" lay-skin="primary"
+                           checked/>
+                    <input type="radio" name="openness" class="look" value="私密浏览" title="私密浏览" lay-skin="primary"/>
+                </div>
+            </div>
+            <div class="layui-form-item newsTop">
+                <label class="layui-form-label"><i class="seraph icon-zhiding"></i> 置　顶</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="newsTop" id="newsTopID" lay-filter="switch" lay-skin="switch"
+                           lay-text="是|否">
+                </div>
+            </div>
+            <hr class="layui-bg-gray"/>
+            <div class="layui-right">
+                <a class="layui-btn layui-btn-sm" lay-filter="addNews" lay-submit><i
+                        class="layui-icon">&#xe609;</i>发布</a>
+                <a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'layedit', 'laydate', 'upload', 'element'], function () {
+        var form = layui.form,
+
+
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            laypage = layui.laypage,
+            upload = layui.upload,
+            layedit = layui.layedit,
+            laydate = layui.laydate,
+            element = layui.element,
+            $ = layui.jquery;
+
+        //用于同步编辑器内容到textarea
+        layedit.sync(editIndex);
+        var object = $('#news_content').val();
+
+        //上传缩略图
+        upload.render({
+            elem: '.thumbBox',
+            url: '/upload',
+            accept: 'file',
+            method: "post",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
+            before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#preview').attr('src', result.data); //图片链接（base64）
+                });
+            },
+            progress: function (n, elem) {
+                var percent = n + '%' //获取进度百分比
+                element.progress('speed', percent); //可配合 layui 进度条元素使用
+
+                //以下系 layui 2.5.6 新增
+                console.log(elem); //得到当前触发的元素 DOM 对象。可通过该元素定义的属性值匹配到对应的进度条。
+            },
+            done: function (res, index, upload) {
+                //假设code=0代表上传成功
+                if (res.code == 0) {
+                    //do something （比如将res返回的图片链接保存到表单的隐藏域）
+                    //上传完毕回调
+                    var num = parseInt(4 * Math.random());  //生成0-4的随机数，随机显示一个头像信息
+                    $('.thumbImg').attr('src', res.data);
+                    $('.thumbBox').css("background", "#fff");
+
+                } else {
+
+                }
+
+            }, error: function () {
+                //请求异常回调
+
+            }
+        });
+
+        //格式化时间
+        function filterTime(val) {
+            if (val < 10) {
+                return "0" + val;
+            } else {
+                return val;
+            }
+        }
+
+        //定时发布
+        var time = new Date();
+        var submitTime = time.getFullYear() + '-' + filterTime(time.getMonth() + 1) + '-' + filterTime(time.getDate()) + ' ' + filterTime(time.getHours()) + ':' + filterTime(time.getMinutes()) + ':' + filterTime(time.getSeconds());
+        laydate.render({
+            elem: '#release',
+            type: 'datetime',
+            trigger: "click",
+            done: function (value, date, endDate) {
+                submitTime = value;
+            }
+        });
+        form.on("radio(release)", function (data) {
+            if (data.elem.title == "定时发布") {
+                $(".releaseDate").removeClass("layui-hide");
+                $(".releaseDate #release").attr("lay-verify", "required");
+            } else {
+                $(".releaseDate").addClass("layui-hide");
+                $(".releaseDate #release").removeAttr("lay-verify");
+                submitTime = time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
+
+            }
+        });
+
+
+        form.on("submit(addNews)", function (data) {
+
+            //截取文章内容中的一部分文字放入文章摘要
+            var abstract = layedit.getText(editIndex).substring(0, 50);
+
+            // 实际使用时的提交信息
+            $.post("/news/updateNews", {
+                id: $("#newsId").val(),
+                newsName: $(".newsName").val(),  //文章标题
+                newsAuthor: sessionStorage.getItem('user'),    //文章作者,当前登录状态
+                newsAbstract: $(".abstract").val(),  //文章摘要
+                content: layedit.getContent(editIndex).split('<audio controls="controls" style="display: none;"></audio>')[0],  //文章内容
+                newsImg: $(".thumbImg").attr("src"),  //缩略图
+                classify: '1',    //文章分类
+                newsStatus: $('.newsStatus select').val(),    //发布状态
+                newsTime: submitTime,    //发布时间
+                newsLook: $('.look').val(),    //文章预览状态
+                newsTop: checkedSwitch ? "checked" : "",    //是否置顶
+            }, function (res) {
+                console.log(res);
+                //弹出loading
+                var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
+                setTimeout(function () {
+                    top.layer.close(index);
+                    top.layer.msg("文章添加成功！");
+                    // layer.closeAll("iframe");
+                    //刷新父页面
+                    parent.location.reload();
+                    window.history.back();
+                }, 500);
+            })
+
+            return false;
+        })
+
+        //监听指定开关
+        var checkedSwitch;
+        form.on('switch(switch)', function (data) {
+            checkedSwitch = data.elem.checked;
+            console.log(data.elem.checked);
+            layer.msg('开关checked：' + (this.checked ? 'checked' : ''), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //预览
+        form.on("submit(look)", function () {
+            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
+            return false;
+        })
+
+        //创建一个编辑器
+        var editIndex = layedit.build('news_content', {
+            height: 535,
+            uploadImage: {
+                url: "/json/newsImg.json"
+            }
+        });
+
+
+        var dataString = JSON.stringify(window.sessionStorage.getItem("updateNews"))
+        var data = JSON.parse(dataString);
+        childIframe(data);
+
+
+        function childIframe(data1) {
+            window.setTimeout(function () { // 设置定时器
+            var data = JSON.parse(data1);
+            console.log(data);//获取父界面的传值
+            console.log(data.newsName);
+            form.val('updateNewsFrom', {
+                'id': data.id,
+                'newsName': data.newsName,
+                'newsAbstract': data.newsAbstract,
+                'newsLook': data.newsLook,
+                'status': data.newsStatus,
+                'newsTop': data.newsTop,
+            })
+            $(".thumbImg").attr("src", data.newsImg);
+            $("#layui-content").html(data.content);
+            layedit.setContent(editIndex,data.content);
+            $(".openness input[name='openness'][title='" + data.newsLook + "']").prop("checked", "checked");
+            form.render("select");
+            form.render();
+
+            }, 100);
+            //创建一个编辑器
+            editIndex = layedit.build('news_content', {
+                height: 535,
+                uploadImage: {
+                    url: "/json/newsImg.json"
+                }
+            });
+        }
+    })
+
+
+</script>
+</body>
+</html>
